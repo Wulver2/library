@@ -27,9 +27,10 @@ function displayLibrary() {
 function makeCard(book) {
     let container = document.querySelector(".container");
     let card = document.createElement("div");
+    let button = document.querySelector("#add_book")
     card.classList.add("card");
     card.textContent = book.info();
-    container.appendChild(card);
+    container.insertBefore(card, button);
 }
 
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
