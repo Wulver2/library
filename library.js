@@ -1,20 +1,23 @@
 const myLibrary = [];
 
-function Book(title, author, pages) {
+function Book(title, author, pages, readStatus) {
     //Book constructor -- could add other properties
     this.title = title;
     this.author = author;
     this.pages = pages;
+    //add a isRead variable
+    this.readStatus = readStatus;
     this.ID = crypto.randomUUID();
 
     this.info = function() {
-        return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages"
+        return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages" +
+        ", " + `${this.readStatus}`
     }
 };
 
-function addBookToLibrary(title, author, pages) {
+function addBookToLibrary(title, author, pages, readStatus) {
     //creates book object from paramaters and stores it in myLibrary
-    const newBook = new Book(title, author, pages);
+    const newBook = new Book(title, author, pages, readStatus);
     myLibrary.push(newBook);
 };
 
@@ -31,10 +34,22 @@ function makeCard(book) {
     card.classList.add("card");
     card.textContent = book.info();
     container.insertBefore(card, button);
+    //add a remove button
+    let remove = document.createElement("button");
+    remove.id = "remove";
+    remove.textContent = "Remove book";
+    card.appendChild(remove);
+    //add functionality to remove button
+    remove.addEventListener("click", function() {
+        //removes from library and screen
+    });
+    //add a way to update isRead status(after button is clicked, it should change
+    //to an undo button)
+    
 }
 
 function generateLibrary() {
-    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
+    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read");
     add_book.addEventListener("click", function() {
         document.getElementById("popup").style.display = "block";
     });
@@ -43,7 +58,8 @@ function generateLibrary() {
         const t = title.value;
         const a = author.value;
         const p = pages.value;
-        addBookToLibrary(t, a, p);
+        const r = read.value;
+        addBookToLibrary(t, a, p, r);
         document.getElementById("popup").style.display = "none";
         makeCard(myLibrary.at(-1));
     });
