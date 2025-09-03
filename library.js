@@ -27,12 +27,26 @@ function displayLibrary() {
 function makeCard(book) {
     let container = document.querySelector(".container");
     let card = document.createElement("div");
-    let button = document.querySelector("#add_book")
+    let button = document.querySelector("#add_book");
     card.classList.add("card");
     card.textContent = book.info();
     container.insertBefore(card, button);
 }
 
+function addBookButton() {
+    let add = document.querySelector("#add_book");
+    let submit = document.querySelector("#submit");
+    add.addEventListener("click", function() {
+        document.getElementById("popup").style.display = "block";
+    });
+    submit.addEventListener("click", function(){
+        const title = document.getElementById("title").value;
+        const author = document.getElementById("author").value;
+        const pages = document.getElementById("pages").value;
+        addBookToLibrary(title, author, pages);
+        
+    });
+}
 addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
-
+addBookButton();
 displayLibrary();

@@ -12,3 +12,13 @@
     padding: 5px;
     text-align: center;
 }
+
+#add_book {
+    background-color: rgb(106, 162, 83);
+    color: white;
+    border-radius: 25px;
+}
+
+#popup {
+    display: none;
+}
