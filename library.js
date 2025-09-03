@@ -33,20 +33,20 @@ function makeCard(book) {
     container.insertBefore(card, button);
 }
 
-function addBookButton() {
-    let add = document.querySelector("#add_book");
-    let submit = document.querySelector("#submit");
-    add.addEventListener("click", function() {
+function generateLibrary() {
+    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
+    add_book.addEventListener("click", function() {
         document.getElementById("popup").style.display = "block";
     });
-    submit.addEventListener("click", function(){
-        const title = document.getElementById("title").value;
-        const author = document.getElementById("author").value;
-        const pages = document.getElementById("pages").value;
-        addBookToLibrary(title, author, pages);
-        
+    popup.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const t = title.value;
+        const a = author.value;
+        const p = pages.value;
+        addBookToLibrary(t, a, p);
+        document.getElementById("popup").style.display = "none";
+        makeCard(myLibrary.at(-1));
     });
+    displayLibrary();
 }
-addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295);
-addBookButton();
-displayLibrary();
+generateLibrary();
