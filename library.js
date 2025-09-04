@@ -38,9 +38,11 @@ function makeCard(book) {
     let container = document.querySelector(".container");
     let card = document.createElement("div");
     let button = document.getElementById("add_book");
+    let info = document.createElement("p");
     card.classList.add("card");
     card.dataset.ID = book.ID;
-    card.textContent = book.info();
+    info.textContent = book.info();
+    card.appendChild(info);
     container.insertBefore(card, button);
     //add a remove button
     let remove = document.createElement("button");
@@ -57,7 +59,15 @@ function makeCard(book) {
     let updateReadStatus = document.createElement("button");
     updateReadStatus.id = "readStatus";
     updateReadStatus.textContent = "change read status"
-
+    updateReadStatus.addEventListener("click", function() {
+        if (book.readStatus == "have not read it") {
+            book.readStatus = "have read it";
+        }
+        else {
+            book.readStatus = "have not read it";
+        }
+        info.textContent = book.info();
+    });
     card.insertBefore(updateReadStatus, remove);
 
     
@@ -82,7 +92,7 @@ function removeBook(card) {
 
 function generateLibrary() {
     // add a sample book (add more later)
-    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read");
+    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read it");
     // click event to allow users to add more books
     add_book.addEventListener("click", function() {
         document.getElementById("popup").style.display = "block";

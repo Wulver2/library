@@ -24,7 +24,14 @@
 
 #remove {
     background-color: red;
+}
+
+#remove, #readStatus {
     border-radius: 25px;
     padding: 5px;
     color: white
+}
+
+#readStatus {
+    background-color: rgb(106, 162, 83);
 }
