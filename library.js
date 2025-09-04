@@ -50,16 +50,26 @@ function makeCard(book) {
     //add functionality to remove button
     remove.addEventListener("click", function() {
         //removes from library and screen
-        removeBook(book, card);
+        removeBook(card);
     });
     //add a way to update isRead status(after button is clicked, it should change
     //to an undo button)
     
 }
 
-function removeBook(book, card) {
+function removeBook(card) {
     // removes it from myLibrary
-
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (card.dataset.ID == myLibrary[i].ID) {
+            if (i == 0) {
+                myLibrary.shift();
+            }
+            else {
+                myLibrary.splice(1, i);
+            }
+            console.log(myLibrary);
+        }
+    }
     // removes it from display
     card.remove();
 }
