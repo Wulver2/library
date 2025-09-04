@@ -17,21 +17,29 @@ function Book(title, author, pages, readStatus) {
 
 function addBookToLibrary(title, author, pages, readStatus) {
     //creates book object from paramaters and stores it in myLibrary
+
     const newBook = new Book(title, author, pages, readStatus);
     myLibrary.push(newBook);
 };
 
 function displayLibrary() {
+    //display all of books stored in myLibrary array
+
     for(let i = 0; i < myLibrary.length; i++) {
         makeCard(myLibrary[i]);
     }
 };
 
 function makeCard(book) {
+    // creates a card within the container that displays the 
+    // book's information, a way to remove it from the library,
+    // and a way to change the read status of the book.
+
     let container = document.querySelector(".container");
     let card = document.createElement("div");
     let button = document.querySelector("#add_book");
     card.classList.add("card");
+    card.dataset.ID = book.ID;
     card.textContent = book.info();
     container.insertBefore(card, button);
     //add a remove button
@@ -42,17 +50,29 @@ function makeCard(book) {
     //add functionality to remove button
     remove.addEventListener("click", function() {
         //removes from library and screen
+        removeBook(book, card);
     });
     //add a way to update isRead status(after button is clicked, it should change
     //to an undo button)
     
 }
 
+function removeBook(book, card) {
+    // removes it from myLibrary
+
+    // removes it from display
+    card.remove();
+}
+
 function generateLibrary() {
+    // add a sample book (add more later)
     addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read");
+    // click event to allow users to add more books
     add_book.addEventListener("click", function() {
         document.getElementById("popup").style.display = "block";
     });
+    // the creates the book that the user enters and adds it
+    // to the library and displays it
     popup.addEventListener("submit", (e) => {
         e.preventDefault();
         const t = title.value;
