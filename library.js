@@ -35,7 +35,7 @@ function makeCard(book) {
     // book's information, a way to remove it from the library,
     // and a way to change the read status of the book.
 
-    let container = document.querySelector(".container");
+    let container = document.querySelector(".books");
     let card = document.createElement("div");
     let button = document.getElementById("add_book");
     let info = document.createElement("p");
