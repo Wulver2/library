@@ -37,7 +37,7 @@ function makeCard(book) {
 
     let container = document.querySelector(".container");
     let card = document.createElement("div");
-    let button = document.querySelector("#add_book");
+    let button = document.getElementById("add_book");
     card.classList.add("card");
     card.dataset.ID = book.ID;
     card.textContent = book.info();
@@ -54,6 +54,12 @@ function makeCard(book) {
     });
     //add a way to update isRead status(after button is clicked, it should change
     //to an undo button)
+    let updateReadStatus = document.createElement("button");
+    updateReadStatus.id = "readStatus";
+    updateReadStatus.textContent = "change read status"
+
+    card.insertBefore(updateReadStatus, remove);
+
     
 }
 
@@ -88,7 +94,15 @@ function generateLibrary() {
         const t = title.value;
         const a = author.value;
         const p = pages.value;
-        const r = read.value;
+        let r;
+
+        if (document.getElementById("haveRead").checked) {
+            r = "have read it";
+        }
+        else {
+            r = "have not read it";
+        }
+
         addBookToLibrary(t, a, p, r);
         document.getElementById("popup").style.display = "none";
         makeCard(myLibrary.at(-1));
