@@ -1,6 +1,18 @@
-const myLibrary = [];
+class Book {
+    constructor(title, author, pages, readStatus) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
+        this.ID = crypto.randomUUID();
+    }
 
-function Book(title, author, pages, readStatus) {
+    get info() {
+        return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages" +
+        ", " + `${this.readStatus}`
+    }
+}
+function book(title, author, pages, readStatus) {
     //Book constructor -- could add other properties
     this.title = title;
     this.author = author;
@@ -15,84 +27,86 @@ function Book(title, author, pages, readStatus) {
     }
 };
 
-function addBookToLibrary(title, author, pages, readStatus) {
-    //creates book object from paramaters and stores it in myLibrary
+class Library {
 
-    const newBook = new Book(title, author, pages, readStatus);
-    myLibrary.push(newBook);
-};
-
-function displayLibrary() {
-    //display all of books stored in myLibrary array
-
-    for(let i = 0; i < myLibrary.length; i++) {
-        makeCard(myLibrary[i]);
+    constructor() {
+        this.myLibrary = []
     }
-};
+    addBookToLibrary(title, author, pages, readStatus) {
+        // creates book object from paramaters and stores it in myLibrary
+        // doesn't display it
+        const newBook = new Book(title, author, pages, readStatus);
+        this.myLibrary.push(newBook);
+    }
 
-function makeCard(book) {
-    // creates a card within the container that displays the 
-    // book's information, a way to remove it from the library,
-    // and a way to change the read status of the book.
-
-    let container = document.querySelector(".books");
-    let card = document.createElement("div");
-    let button = document.getElementById("add_book");
-    let info = document.createElement("p");
-    card.classList.add("card");
-    card.dataset.ID = book.ID;
-    info.textContent = book.info();
-    card.appendChild(info);
-    container.insertBefore(card, button);
-    //add a remove button
-    let remove = document.createElement("button");
-    remove.id = "remove";
-    remove.textContent = "Remove book";
-    card.appendChild(remove);
-    //add functionality to remove button
-    remove.addEventListener("click", function() {
-        //removes from library and screen
-        removeBook(card);
-    });
-    //add a way to update isRead status(after button is clicked, it should change
-    //to an undo button)
-    let updateReadStatus = document.createElement("button");
-    updateReadStatus.id = "readStatus";
-    updateReadStatus.textContent = "change read status"
-    updateReadStatus.addEventListener("click", function() {
-        if (book.readStatus == "have not read it") {
-            book.readStatus = "have read it";
+    display() {
+        for(let i = 0; i < this.myLibrary.length; i++) {
+            this.makeCard(this.myLibrary[i]);
         }
-        else {
-            book.readStatus = "have not read it";
+    }
+
+    removeBook(card) {
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (card.dataset.ID == myLibrary[i].ID) {
+                if (i == 0) {
+                    myLibrary.shift();
+                }
+                else {
+                    myLibrary.splice(1, i);
+                }
+                console.log(myLibrary);
+            }
         }
-        info.textContent = book.info();
-    });
-    card.insertBefore(updateReadStatus, remove);
+        // removes it from display
+        card.remove();
+    }
 
-    
-}
+    makeCard(book) {
+        // creates a card within the container that displays the 
+        // book's information, a way to remove it from the library,
+        // and a way to change the read status of the book.
 
-function removeBook(card) {
-    // removes it from myLibrary
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (card.dataset.ID == myLibrary[i].ID) {
-            if (i == 0) {
-                myLibrary.shift();
+        let container = document.querySelector(".books");
+        let card = document.createElement("div");
+        let button = document.getElementById("add_book");
+        let info = document.createElement("p");
+        card.classList.add("card");
+        card.dataset.ID = book.ID;
+        info.textContent = book.info;
+        card.appendChild(info);
+        container.insertBefore(card, button);
+        //add a remove button
+        let remove = document.createElement("button");
+        remove.id = "remove";
+        remove.textContent = "Remove book";
+        card.appendChild(remove);
+        //add functionality to remove button
+        remove.addEventListener("click", function() {
+            //removes from library and screen
+            this.removeBook(card);
+        });
+        //add a way to update isRead status(after button is clicked, it should change
+        //to an undo button)
+        let updateReadStatus = document.createElement("button");
+        updateReadStatus.id = "readStatus";
+        updateReadStatus.textContent = "change read status"
+        updateReadStatus.addEventListener("click", function() {
+            if (book.readStatus == "have not read it") {
+                book.readStatus = "have read it";
             }
             else {
-                myLibrary.splice(1, i);
+                book.readStatus = "have not read it";
             }
-            console.log(myLibrary);
-        }
+            info.textContent = book.info;
+        });
+        card.insertBefore(updateReadStatus, remove);
     }
-    // removes it from display
-    card.remove();
 }
 
 function generateLibrary() {
-    // add a sample book (add more later)
-    addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read it");
+    let library = new Library();
+    // add a sample book 
+    library.addBookToLibrary("The Hobbit", "J.R.R. Tolkien", 295, "have not read it");
     // click event to allow users to add more books
     add_book.addEventListener("click", function() {
         document.getElementById("popup").style.display = "block";
@@ -113,10 +127,14 @@ function generateLibrary() {
             r = "have not read it";
         }
 
-        addBookToLibrary(t, a, p, r);
+        library.addBookToLibrary(t, a, p, r);
         document.getElementById("popup").style.display = "none";
-        makeCard(myLibrary.at(-1));
+        end = library.myLibrary.length - 1;
+        library.makeCard(library.myLibrary[end]);
     });
-    displayLibrary();
+    library.display();
 }
 generateLibrary();
+
+let test = new Book("The Hobbit", "J.R.R. Tolkien", 295, "have not read it")
+console.log(test.info);
