@@ -12,20 +12,6 @@ class Book {
         ", " + `${this.readStatus}`
     }
 }
-function book(title, author, pages, readStatus) {
-    //Book constructor -- could add other properties
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    //add a isRead variable
-    this.readStatus = readStatus;
-    this.ID = crypto.randomUUID();
-
-    this.info = function() {
-        return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages" +
-        ", " + `${this.readStatus}`
-    }
-};
 
 class Library {
 
@@ -46,15 +32,14 @@ class Library {
     }
 
     removeBook(card) {
-        for (let i = 0; i < myLibrary.length; i++) {
-            if (card.dataset.ID == myLibrary[i].ID) {
+        for (let i = 0; i < this.myLibrary.length; i++) {
+            if (card.dataset.ID == this.myLibrary[i].ID) {
                 if (i == 0) {
-                    myLibrary.shift();
+                    this. myLibrary.shift();
                 }
                 else {
-                    myLibrary.splice(1, i);
+                    this.myLibrary.splice(1, i);
                 }
-                console.log(myLibrary);
             }
         }
         // removes it from display
@@ -82,8 +67,9 @@ class Library {
         card.appendChild(remove);
         //add functionality to remove button
         remove.addEventListener("click", function() {
+            var obj = new Library();
             //removes from library and screen
-            this.removeBook(card);
+            obj.removeBook(card);
         });
         //add a way to update isRead status(after button is clicked, it should change
         //to an undo button)
