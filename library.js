@@ -11,6 +11,12 @@ class Book {
         return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages" +
         ", " + `${this.readStatus}`
     }
+
+    formValidation(params) {
+        // title, author required. want to change default message
+        let t = document.getElementById("title");
+        let a = document.getElementById("author")
+    }
 }
 
 class Library {
