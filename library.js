@@ -11,12 +11,6 @@ class Book {
         return `${this.title}` + " by " + `${this.author}` + ", " + `${this.pages}` + " pages" +
         ", " + `${this.readStatus}`
     }
-
-    formValidation(params) {
-        // title, author required. want to change default message
-        let t = document.getElementById("title");
-        let a = document.getElementById("author")
-    }
 }
 
 class Library {
@@ -111,6 +105,26 @@ function generateLibrary() {
         const a = author.value;
         const p = pages.value;
         let r;
+        // new form validation messages for title and author
+        const titl = document.getElementById("title");
+        let aut = document.getElementById("author");
+
+        if (titl.validity.valueMissing) {
+            titl.setCustomValidity("Please enter a title!");
+            titl.reportValidity();
+            return;
+        }
+        else {
+            titl.setCustomValidity("");
+        }
+        if (aut.validity.valueMissing) {
+            aut.setCustomValidity("Please enter an author!");
+            aut.reportValidity();
+            return;
+        }
+        else {
+            aut.setCustomValidity("");
+        }
 
         if (document.getElementById("haveRead").checked) {
             r = "have read it";
